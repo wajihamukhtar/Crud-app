@@ -1,11 +1,12 @@
+import "./App.css";
+import Crud from "./Crud";
 
-import './App.css';
-import AppRouter from './AppRouter';
 function App() {
   return (
-   <>
-   <AppRouter/>
-   </>
+    <>
+      {/* <AppRouter/> */}
+      <Crud />
+    </>
   );
 }
 

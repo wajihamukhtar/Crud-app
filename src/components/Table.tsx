@@ -1,35 +1,55 @@
-import { Link } from "react-router-dom"
 
-const Table = (props:any) => {
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+
+type propsType = {
+  datasource: any[];
+  gridCols: {
+    key: string;
+    label: string;
+    displayField?: any;
+  }[];
+};
+const Table = (props: propsType) => {
+    const[inputValue,setinputValue]=useState('')
+  const { datasource, gridCols } = props;
   return (
-    <div className="relative overflow-x-auto">
-            <table className=" min-w-[700px] w-11/12 text-sm text-left mt-2 rtl:text-right">
-                <thead className=" text-md uppercase text-slate-700 bg-blue-100">
-                    <tr>
-                        {props?.columns && props?.columns.map((head:any, index:number) => (
-                            <th key={index} scope="col" className="border px-6 py-3" style={{ width: head.width }}>
-                                {head.headerName}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody className='text-md text-slate-800'>
-                    {props?.rows && props?.rows?.map((item:any, rowIndex:number) => (
-                        <tr key={rowIndex} className="bg-white dark:bg-gray-800">
-                            {props.columns.map((column:any, colIndex:number) => (
-                                <td key={colIndex} className="border px-1 py-3">
-                                    {item[column?.feild]}
-                                </td>
-                            ))}
-                     <td className="flex">   
-                    <Link to={'/Crud'}></Link>
-                     </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-  )
-}
-
-export default Table
+    <>
+    <Box>
+        <input className="border px-5 text-2xl border-gray-900" value={inputValue}
+        onChange={(e:any) => setinputValue(e.target.value)} type="text"  placeholder="Enter Name."/>
+    </Box>
+      <Box component={"table"}>
+        <Typography component={"thead"}>
+          {gridCols?.map((col, ind) => (
+            <Typography
+              key={ind}
+              component={"th"}
+              sx={{ border:'2px solid gray' ,padding:'5px ', fontSize:'20px'}}
+            >
+              {col.label}
+            </Typography>
+          ))}
+        </Typography>
+        <Box component={"tbody"} className="text-center ">
+          {datasource?.slice(0, 20)?.map((rows: any, rowindex: any) => (
+            <Typography component={"tr"} key={rowindex}>
+              {gridCols.map((col, ind) => (
+                <Typography
+                  component={"td"}
+                  className="border-2 border-x-emerald-600"
+                  key={ind}
+                >
+                  <Typography component={"a"} >
+                    {col.displayField ? col.displayField(rows) : rows[col.key]}
+                  </Typography>
+                </Typography>
+              ))}
+            </Typography>
+          ))}
+        </Box>
+      </Box>
+    </>
+  );
+};
+export default Table;

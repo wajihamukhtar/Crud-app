@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 
 const Input = (props:any) => {
+  
   const handleSubmit=()=>{
 <Link to={'/Crud'}></Link>
   }  
