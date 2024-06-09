@@ -18,7 +18,7 @@ const Crud: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get<Comment[]>(
-        "http://localhost:3000/comments"
+        "https://jsonplaceholder.typicode.com/comments"
       );
       console.log("Fetched comments:", response.data);
       setComments(response.data);
@@ -36,7 +36,7 @@ const Crud: React.FC = () => {
           body: "This is a new comment.",
         };
         const response = await axios.post<Comment>(
-          "http://localhost:3000/comments",
+          "https://jsonplaceholder.typicode.com/comments",
           newComment
         );
         setComments([...comments, response.data]);
@@ -50,7 +50,7 @@ const Crud: React.FC = () => {
   const editComment = async (id: number, updatedComment: Comment) => {
     try {
       const response = await axios.put<Comment>(
-        `http://localhost:3000/comments/${id}`,
+        `https://jsonplaceholder.typicode.com/comments/${id}`,
         updatedComment
       );
       setComments(
@@ -63,7 +63,7 @@ const Crud: React.FC = () => {
 
   const deleteComment = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3000/comments/${id}`);
+      await axios.delete(`https://jsonplaceholder.typicode.com/comments/${id}`);
       setComments(comments.filter((comment) => comment.id !== id));
     } catch (err: any) {
       setError(err.message);
